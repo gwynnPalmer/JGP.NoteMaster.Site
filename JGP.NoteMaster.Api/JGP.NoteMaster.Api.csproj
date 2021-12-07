@@ -21,6 +21,7 @@
     <ProjectReference Include="..\JGP.NoteMaster.Core\JGP.NoteMaster.Core.csproj" />
     <ProjectReference Include="..\JGP.NoteMaster.Data.EntityFramework\JGP.NoteMaster.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\JGP.NoteMaster.Services\JGP.NoteMaster.Services.csproj" />
+    <ProjectReference Include="..\JGP.NoteMaster.Web.Models\JGP.NoteMaster.Web.Models.csproj" />
   </ItemGroup>
 
 </Project>

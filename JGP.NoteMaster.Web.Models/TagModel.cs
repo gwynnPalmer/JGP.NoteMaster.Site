@@ -1,7 +1,9 @@
 ﻿namespace JGP.NoteMaster.Web.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Text.Json.Serialization;
     using Core;
     using Core.Commands;
@@ -27,6 +29,11 @@
             Id = tag.Id;
             CategoryId = tag.CategoryId;
             Name = tag.Name;
+
+            if (tag.Notes != null)
+            {
+                Notes = tag.Notes.Select(x => new NoteModel(x)).ToList();
+            }
         }
 
         /// <summary>
@@ -49,6 +56,11 @@
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the notes.
+        /// </summary>
+        /// <value>The notes.</value>
+        public List<NoteModel> Notes { get; set; }
 
         /// <summary>
         ///     Gets the Tag Create Command
@@ -56,12 +68,23 @@
         /// <returns>A Tag Create Command populated with the current model values.</returns>
         public TagCreateCommand GetCreateCommand()
         {
-            return new TagCreateCommand
+            var command = new TagCreateCommand
             {
                 Id = Id,
                 CategoryId = CategoryId,
                 Name = Name
             };
+
+            if (Notes != null)
+            {
+                foreach (var cmd in Notes.Select(x => x.GetCreateCommand()))
+                {
+                    cmd.TagId = Id;
+                    command.Notes.Add(cmd);
+                }
+            }
+
+            return command;
         }
 
 
@@ -71,12 +94,23 @@
         /// <returns>A Tag Update Command populated with the current model values.</returns>
         public TagUpdateCommand GetUpdateCommand()
         {
-            return new TagUpdateCommand
+            var command = new TagUpdateCommand
             {
                 Id = Id,
                 CategoryId = CategoryId,
                 Name = Name
             };
+
+            if (Notes != null)
+            {
+                foreach (var cmd in Notes.Select(x => x.GetCreateCommand()))
+                {
+                    cmd.TagId = Id;
+                    command.Notes.Add(cmd);
+                }
+            }
+
+            return command;
         }
     }
 }

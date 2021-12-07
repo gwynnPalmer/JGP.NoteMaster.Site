@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text.Json;
     using Commands;
 
@@ -24,8 +25,18 @@
         public Category(CategoryCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = command.Id;
+            Id = Guid.NewGuid();
             Name = command.Name;
+
+            if (command.Tags != null)
+            {
+                Tags = new List<Tag>();
+                foreach (var cmd in command.Tags)
+                {
+                    cmd.CategoryId = Id;
+                    Tags.Add(new Tag(cmd));
+                }
+            }
         }
 
         /// <summary>
@@ -49,11 +60,21 @@
 
         #region DOMAIN METHODS
 
+        /// <summary>
+        ///     Updates the specified command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <exception cref="System.ArgumentNullException">command</exception>
         public void Update(CategoryUpdateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
             Id = command.Id;
             Name = command.Name;
+
+            if (command.Tags != null)
+            {
+                Tags = command.Tags.Select(x => new Tag(x)).ToList();
+            }
         }
 
         #endregion
