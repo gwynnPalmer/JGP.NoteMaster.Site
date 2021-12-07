@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JGP.NoteMaster.Data.EntityFramework\JGP.NoteMaster.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\JGP.noteMaster.Packages\JGP.noteMaster.Packages.csproj" />
+  </ItemGroup>
+
+</Project>
