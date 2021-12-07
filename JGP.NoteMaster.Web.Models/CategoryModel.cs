@@ -65,6 +65,11 @@
                 Name = Name
             };
 
+            if (Id != default)
+            {
+                command.Id = Id;
+            }
+
             if (Tags != null)
             {
                 foreach (var cmd in Tags.Select(x => x.GetCreateCommand()))

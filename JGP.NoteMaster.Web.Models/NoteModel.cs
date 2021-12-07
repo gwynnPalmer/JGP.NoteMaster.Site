@@ -72,12 +72,19 @@
         /// <returns>A Note Create Command populated with the current model values.</returns>
         public NoteCreateCommand GetCreateCommand()
         {
-            return new NoteCreateCommand
+            var command = new NoteCreateCommand
             {
                 Id = Id,
                 TagId = TagId,
                 Body = Body
             };
+
+            if (Id != default)
+            {
+                command.Id = Id;
+            }
+
+            return command;
         }
 
 
