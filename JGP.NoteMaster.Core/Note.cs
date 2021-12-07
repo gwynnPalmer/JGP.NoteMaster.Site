@@ -55,6 +55,11 @@
 
         #region DOMAIN METHODS
 
+        /// <summary>
+        ///     Updates the specified command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <exception cref="System.ArgumentNullException">command</exception>
         public void Update(NoteUpdateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
