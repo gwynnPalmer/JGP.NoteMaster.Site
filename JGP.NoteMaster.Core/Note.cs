@@ -23,7 +23,7 @@
         public Note(NoteCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = command.Id;
+            Id = command.Id ?? Guid.NewGuid();
             TagId = command.TagId;
             Body = command.Body;
         }

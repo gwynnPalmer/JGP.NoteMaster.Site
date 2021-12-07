@@ -8,6 +8,8 @@
     /// </summary>
     public class CategoryCreateCommand
     {
+        public Guid? Id { get; set; }
+
         /// <summary>
         ///     Gets or sets the name.
         /// </summary>

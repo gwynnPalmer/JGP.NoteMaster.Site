@@ -25,7 +25,7 @@
         public Tag(TagCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = command.Id;
+            Id = command.Id ?? Guid.NewGuid();
             CategoryId = command.CategoryId;
             Name = command.Name;
 

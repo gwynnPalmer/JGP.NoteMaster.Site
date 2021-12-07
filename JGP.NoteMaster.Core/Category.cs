@@ -25,7 +25,7 @@
         public Category(CategoryCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = Guid.NewGuid();
+            Id = command.Id ?? Guid.NewGuid();
             Name = command.Name;
 
             if (command.Tags != null)

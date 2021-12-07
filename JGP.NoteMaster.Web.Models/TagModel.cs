@@ -70,10 +70,14 @@
         {
             var command = new TagCreateCommand
             {
-                Id = Id,
                 CategoryId = CategoryId,
                 Name = Name
             };
+
+            if (Id != default)
+            {
+                command.Id = Id;
+            }
 
             if (Notes != null)
             {
