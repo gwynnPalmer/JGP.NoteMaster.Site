@@ -29,9 +29,9 @@
             Id = category.Id;
             Name = category.Name;
 
-            if (category.Tags != null)
+            if (category.Notes != null)
             {
-                Tags = category.Tags.Select(x => new TagModel(x)).ToList();
+                Notes = category.Notes.Select(x => new NoteModel(x)).ToList();
             }
         }
 
@@ -48,11 +48,7 @@
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the tags.
-        /// </summary>
-        /// <value>The tags.</value>
-        public List<TagModel> Tags { get; set; }
+        public List<NoteModel> Notes { get; set; }
 
         /// <summary>
         ///     Gets the Category Create Command
@@ -70,12 +66,12 @@
                 command.Id = Id;
             }
 
-            if (Tags != null)
+            if (Notes != null)
             {
-                foreach (var cmd in Tags.Select(x => x.GetCreateCommand()))
+                foreach (var cmd in Notes.Select(x => x.GetCreateCommand()))
                 {
                     cmd.CategoryId = Id;
-                    command.Tags.Add(cmd);
+                    command.Notes.Add(cmd);
                 }
             }
 
@@ -95,12 +91,12 @@
                 Name = Name
             };
 
-            if (Tags != null)
+            if (Notes != null)
             {
-                foreach (var cmd in Tags.Select(x => x.GetCreateCommand()))
+                foreach (var cmd in Notes.Select(x => x.GetCreateCommand()))
                 {
                     cmd.CategoryId = Id;
-                    command.Tags.Add(cmd);
+                    command.Notes.Add(cmd);
                 }
             }
 

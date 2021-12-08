@@ -23,9 +23,23 @@
         public Note(NoteCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = command.Id ?? Guid.NewGuid();
-            TagId = command.TagId;
-            Body = command.Body;
+            CategoryId = command.CategoryId;
+
+            if (command.Id != null)
+            {
+                Id = (Guid)command.Id;
+            }
+            else
+            {
+                Id = Guid.NewGuid();
+            }
+
+            if (command.Category != null)
+            {
+                Category = new Category(command.Category);
+            }
+
+            BodyText = command.BodyText;
         }
 
         /// <summary>
@@ -34,23 +48,15 @@
         /// <value>The id.</value>
         public Guid Id { get; protected set; }
 
-        /// <summary>
-        ///     Gets the tag id.
-        /// </summary>
-        /// <value>The tag id.</value>
-        public Guid TagId { get; protected set; }
+        public Guid CategoryId { get; protected set; }
 
         /// <summary>
         ///     Gets the body.
         /// </summary>
         /// <value>The body.</value>
-        public string Body { get; protected set; }
+        public string BodyText { get; protected set; }
 
-        /// <summary>
-        ///     Gets or sets the tag.
-        /// </summary>
-        /// <value>The tag.</value>
-        public Tag Tag { get; set; }
+        public Category Category { get; set; }
 
 
         #region DOMAIN METHODS
@@ -64,8 +70,8 @@
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
             Id = command.Id;
-            TagId = command.TagId;
-            Body = command.Body;
+            CategoryId = command.CategoryId;
+            BodyText = command.BodyText;
         }
 
         #endregion
@@ -82,8 +88,8 @@
             if (note is null) return false;
 
             return Id == note.Id
-                   && TagId == note.TagId
-                   && Body == note.Body
+                   && CategoryId == note.CategoryId
+                   && BodyText == note.BodyText
                 ;
         }
 
@@ -100,8 +106,8 @@
 
             return obj is Note note
                    && Id == note.Id
-                   && TagId == note.TagId
-                   && Body == note.Body
+                   && CategoryId == note.CategoryId
+                   && BodyText == note.BodyText
                 ;
         }
 

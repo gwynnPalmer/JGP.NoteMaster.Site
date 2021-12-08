@@ -1,9 +1,11 @@
 ﻿namespace JGP.NoteMaster.Data.EntityFramework
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using Mapping;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -64,12 +66,6 @@
         /// </summary>
         /// <value>The categories.</value>
         public DbSet<Category> Categories { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the tags.
-        /// </summary>
-        /// <value>The tags.</value>
-        public DbSet<Tag> Tags { get; set; }
 
         /// <summary>
         ///     Gets or sets the notes.
@@ -168,6 +164,8 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Tables.
+            modelBuilder.ApplyConfiguration(new NoteMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
             // Views.
         }
 
@@ -179,11 +177,6 @@
         /// <value>The categories.</value>
         public DbSet<Category> Categories { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the tags.
-        /// </summary>
-        /// <value>The tags.</value>
-        public DbSet<Tag> Tags { get; set; }
 
         /// <summary>
         ///     Gets or sets the notes.

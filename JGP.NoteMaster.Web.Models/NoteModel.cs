@@ -25,10 +25,14 @@
         public NoteModel(Note note)
         {
             Id = note.Id;
-            TagId = note.TagId;
-            Body = note.Body;
-            Tag = note.Tag.Name;
-            Category = note.Tag.Category.Name;
+            BodyText = note.BodyText;
+            CategoryId = note.CategoryId;
+
+            if (note.Category != null)
+            {
+                Category = new CategoryModel(note.Category);
+                CategoryText = note.Category.Name;
+            }
         }
 
         /// <summary>
@@ -42,29 +46,23 @@
         ///     Gets or sets the tag id.
         /// </summary>
         [Required]
-        [JsonPropertyName("tagId")]
-        public Guid TagId { get; set; }
+        [JsonPropertyName("categoryId")]
+        public Guid CategoryId { get; set; }
 
         /// <summary>
         ///     Gets or sets the body.
         /// </summary>
         [JsonPropertyName("body")]
-        public string Body { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the tag.
-        /// </summary>
-        /// <value>The tag.</value>
-        [JsonPropertyName("tag")]
-        public string Tag { get; set; }
+        public string BodyText { get; set; }
 
         /// <summary>
         ///     Gets or sets the category.
         /// </summary>
         /// <value>The category.</value>
         [JsonPropertyName("category")]
-        public string Category { get; set; }
+        public string CategoryText { get; set; }
 
+        public CategoryModel Category { get; set; }
 
         /// <summary>
         ///     Gets the Note Create Command
@@ -75,13 +73,18 @@
             var command = new NoteCreateCommand
             {
                 Id = Id,
-                TagId = TagId,
-                Body = Body
+                CategoryId = CategoryId,
+                BodyText = BodyText,
             };
 
             if (Id != default)
             {
                 command.Id = Id;
+            }
+
+            if (Category != null)
+            {
+                command.Category = Category.GetCreateCommand();
             }
 
             return command;
@@ -94,12 +97,19 @@
         /// <returns>A Note Update Command populated with the current model values.</returns>
         public NoteUpdateCommand GetUpdateCommand()
         {
-            return new NoteUpdateCommand
+            var command = new NoteUpdateCommand
             {
                 Id = Id,
-                TagId = TagId,
-                Body = Body
+                CategoryId = CategoryId,
+                BodyText = BodyText,
             };
+
+            if (Category != null)
+            {
+                command.Category = Category.GetCreateCommand();
+            }
+
+            return command;
         }
     }
 }

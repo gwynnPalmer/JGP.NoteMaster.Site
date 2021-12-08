@@ -25,17 +25,21 @@
         public Category(CategoryCreateCommand command)
         {
             _ = command ?? throw new ArgumentNullException(nameof(command));
-            Id = command.Id ?? Guid.NewGuid();
+
+            if (command.Id != null)
+            {
+                Id = (Guid)command.Id;
+            }
+            else
+            {
+                Id = Guid.NewGuid();
+            }
+
             Name = command.Name;
 
-            if (command.Tags != null)
+            if (command.Notes != null)
             {
-                Tags = new List<Tag>();
-                foreach (var cmd in command.Tags)
-                {
-                    cmd.CategoryId = Id;
-                    Tags.Add(new Tag(cmd));
-                }
+                Notes = command.Notes.Select(x => new Note(x)).ToList();
             }
         }
 
@@ -51,12 +55,8 @@
         /// <value>The name.</value>
         public string Name { get; protected set; }
 
+        public List<Note> Notes { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the tags.
-        /// </summary>
-        /// <value>The tags.</value>
-        public List<Tag> Tags { get; set; }
 
         #region DOMAIN METHODS
 
@@ -71,9 +71,9 @@
             Id = command.Id;
             Name = command.Name;
 
-            if (command.Tags != null)
+            if (command.Notes != null)
             {
-                Tags = command.Tags.Select(x => new Tag(x)).ToList();
+                Notes = command.Notes.Select(x => new Note(x)).ToList();
             }
         }
 

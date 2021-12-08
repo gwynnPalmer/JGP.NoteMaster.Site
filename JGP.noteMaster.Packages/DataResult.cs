@@ -82,7 +82,8 @@
                 AffectedCount = 0,
                 Errors = new List<KeyValuePair<string, string>>
                 {
-                    new(nameof(exception), exception.Message)
+                    new(nameof(exception), exception.Message),
+                    new("Inner Exception", $"{exception.InnerException}")
                 }
             };
         }

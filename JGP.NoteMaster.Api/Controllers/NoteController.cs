@@ -53,6 +53,16 @@
         #region CATEGORIES
 
         /// <summary>
+        ///     Create category as an asynchronous operation.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>A Task&lt;DataResult&gt; representing the asynchronous operation.</returns>
+        public async Task<DataResult> CreateCategoryAsync([Required] CategoryModel model)
+        {
+            return await _noteService.CreateCategoryAsync(model.GetCreateCommand());
+        }
+
+        /// <summary>
         ///     Get categories as an asynchronous operation.
         /// </summary>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
@@ -62,23 +72,6 @@
         {
             var categories = await _noteService.GetCategoriesAsync();
             return categories.Select(x => new CategoryModel(x)).ToList();
-        }
-
-        #endregion
-
-        #region TAGS
-
-        /// <summary>
-        ///     Get tags by category as an asynchronous operation.
-        /// </summary>
-        /// <param name="categoryId">The category identifier.</param>
-        /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        [HttpGet("tags/{categoryId:guid}")]
-        [ProducesResponseType(typeof(List<TagModel>), StatusCodes.Status200OK)]
-        public async Task<List<TagModel>> GetTagsByCategoryAsync([Required] Guid categoryId)
-        {
-            var tags = await _noteService.GetTagsByCategoryAsync(categoryId);
-            return tags.Select(x => new TagModel(x)).ToList();
         }
 
         #endregion
@@ -119,7 +112,7 @@
         [ProducesResponseType(typeof(List<NoteModel>), StatusCodes.Status200OK)]
         public async Task<List<NoteModel>> GetNotesByTagAsync([Required] Guid tagId)
         {
-            var notes = await _noteService.GetNotesByTagAsync(tagId);
+            var notes = await _noteService.GetNotesByCategoryAsync(tagId);
             return notes.Select(x => new NoteModel(x)).ToList();
         }
 

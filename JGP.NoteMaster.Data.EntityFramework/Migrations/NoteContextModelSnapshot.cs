@@ -23,69 +23,46 @@ namespace JGP.NoteMaster.Data.EntityFramework.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", "dbo");
                 });
 
             modelBuilder.Entity("JGP.NoteMaster.Core.Note", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
-                    b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TagId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("Notes");
-                });
-
-            modelBuilder.Entity("JGP.NoteMaster.Core.Tag", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("BodyText")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("BodyText");
 
                     b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CategoryId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Notes", "dbo");
                 });
 
             modelBuilder.Entity("JGP.NoteMaster.Core.Note", b =>
                 {
-                    b.HasOne("JGP.NoteMaster.Core.Tag", "Tag")
-                        .WithMany("Notes")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("JGP.NoteMaster.Core.Tag", b =>
-                {
                     b.HasOne("JGP.NoteMaster.Core.Category", "Category")
-                        .WithMany("Tags")
+                        .WithMany("Notes")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -94,11 +71,6 @@ namespace JGP.NoteMaster.Data.EntityFramework.Migrations
                 });
 
             modelBuilder.Entity("JGP.NoteMaster.Core.Category", b =>
-                {
-                    b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("JGP.NoteMaster.Core.Tag", b =>
                 {
                     b.Navigation("Notes");
                 });
