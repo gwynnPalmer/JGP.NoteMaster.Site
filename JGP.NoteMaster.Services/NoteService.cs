@@ -71,8 +71,7 @@
         public async Task<List<Category>> GetCategoriesAsync()
         {
             return await _noteContext.Categories
-                .Include(x => x.Tags)
-                .ThenInclude(x => x.Notes)
+                .Include(x => x.Notes)
                 .AsNoTracking().ToListAsync();
         }
 
@@ -84,8 +83,7 @@
         public async Task<Category> GetCategoryByIdAsync(Guid categoryId)
         {
             return await _noteContext.Categories
-                .Include(x => x.Tags)
-                .ThenInclude(x => x.Notes)
+                .Include(x => x.Notes)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == categoryId);
         }
@@ -100,8 +98,7 @@
             try
             {
                 var category = await _noteContext.Categories
-                    .Include(x => x.Tags)
-                    .ThenInclude(x => x.Notes)
+                    .Include(x => x.Notes)
                     .FirstOrDefaultAsync(x => x.Id == command.Id);
                 if (category == null)
                     return DataResult.GetNotFoundDataResult($"Cannot locate existing category for ID: '{command.Id}'");
@@ -126,8 +123,7 @@
             try
             {
                 var category = await _noteContext.Categories
-                    .Include(x => x.Tags)
-                    .ThenInclude(x => x.Notes)
+                    .Include(x => x.Notes)
                     .FirstOrDefaultAsync(x => x.Id == categoryId);
                 if (category == null)
                     return DataResult.GetNotFoundDataResult($"Cannot locate existing category for ID: '{categoryId}'");
@@ -141,24 +137,6 @@
             {
                 return DataResult.GetErrorDataResult(e);
             }
-        }
-
-        #endregion
-
-        #region TAGS
-
-        /// <summary>
-        ///     Get tags by category as an asynchronous operation.
-        /// </summary>
-        /// <param name="categoryId">The category identifier.</param>
-        /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        public async Task<List<Tag>> GetTagsByCategoryAsync(Guid categoryId)
-        {
-            return await _noteContext.Tags
-                .Where(x => x.CategoryId == categoryId)
-                .Include(x => x.Category)
-                .AsNoTracking()
-                .ToListAsync();
         }
 
         #endregion
@@ -197,8 +175,7 @@
             try
             {
                 return await _noteContext.Notes
-                    .Include(x => x.Tag)
-                    .ThenInclude(x => x.Category)
+                    .Include(x => x.Category)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == noteId);
             }
@@ -213,13 +190,12 @@
         /// </summary>
         /// <param name="tagId">The tag identifier.</param>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        public async Task<List<Note>> GetNotesByTagAsync(Guid tagId)
+        public async Task<List<Note>> GetNotesByCategoryAsync(Guid categoryid)
         {
             return await _noteContext.Notes
-                .Include(x => x.Tag)
-                .ThenInclude(x => x.Category)
+                .Include(x => x.Category)
                 .AsNoTracking()
-                .Where(x => x.TagId == tagId)
+                .Where(x => x.CategoryId == categoryid)
                 .ToListAsync();
         }
 
@@ -233,8 +209,7 @@
             try
             {
                 var note = await _noteContext.Notes
-                    .Include(x => x.Tag)
-                    .ThenInclude(x => x.Category)
+                    .Include(x => x.Category)
                     .FirstOrDefaultAsync(x => x.Id == command.Id);
                 if (note == null)
                     return DataResult.GetNotFoundDataResult($"Cannot locate existing note for ID: '{command.Id}'");

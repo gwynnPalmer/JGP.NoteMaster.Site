@@ -76,19 +76,11 @@
         /// <returns>Task&lt;DataResult&gt;.</returns>
         Task<DataResult> DeleteCategoryAsync(Guid categoryId);
 
-
-        /// <summary>
-        ///     Get tags by category as an asynchronous operation.
-        /// </summary>
-        /// <param name="categoryId">The category identifier.</param>
-        /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        Task<List<Tag>> GetTagsByCategoryAsync(Guid categoryId);
-
         /// <summary>
         ///     Get notes by tag as an asynchronous operation.
         /// </summary>
         /// <param name="tagId">The tag identifier.</param>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        Task<List<Note>> GetNotesByTagAsync(Guid tagId);
+        Task<List<Note>> GetNotesByCategoryAsync(Guid tagId);
     }
 }

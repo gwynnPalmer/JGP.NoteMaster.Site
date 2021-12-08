@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JGP.NoteMaster.Web.Models",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JGP.NoteMaster.Web.Proxy", "JGP.NoteMaster.Web.Proxy\JGP.NoteMaster.Web.Proxy.csproj", "{6256853F-194B-42B4-B0A4-D9F05F36E73A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JGP.NoteMaster.Tests", "JGP.NoteMaster.Tests\JGP.NoteMaster.Tests.csproj", "{48897CEF-E414-41DA-91AC-EA8497B293AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{6256853F-194B-42B4-B0A4-D9F05F36E73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6256853F-194B-42B4-B0A4-D9F05F36E73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6256853F-194B-42B4-B0A4-D9F05F36E73A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48897CEF-E414-41DA-91AC-EA8497B293AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48897CEF-E414-41DA-91AC-EA8497B293AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48897CEF-E414-41DA-91AC-EA8497B293AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48897CEF-E414-41DA-91AC-EA8497B293AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

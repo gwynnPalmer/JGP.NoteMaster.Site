@@ -23,13 +23,13 @@
             // Table & Column Mappings
             builder.ToTable("Notes", "dbo");
             builder.Property(x => x.Id).HasColumnName("Id");
-            builder.Property(x => x.TagId).HasColumnName("TagId");
-            builder.Property(x => x.Body).HasColumnName("Body");
+            builder.Property(x => x.CategoryId).HasColumnName("CategoryId");
+            builder.Property(x => x.BodyText).HasColumnName("BodyText");
 
             // Relationships
-            builder.HasOne(x => x.Tag)
+            builder.HasOne(x => x.Category)
                 .WithMany(x => x.Notes)
-                .HasForeignKey(x => x.TagId);
+                .HasForeignKey(x => x.CategoryId);
         }
     }
 }
