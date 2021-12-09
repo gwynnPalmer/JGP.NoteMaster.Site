@@ -45,6 +45,7 @@
         /// <summary>
         ///     Gets or sets the name.
         /// </summary>
+        [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }
 

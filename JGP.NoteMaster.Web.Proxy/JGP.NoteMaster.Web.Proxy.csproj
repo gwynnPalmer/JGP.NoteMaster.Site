@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JGP.noteMaster.Packages\JGP.noteMaster.Packages.csproj" />
+    <ProjectReference Include="..\JGP.NoteMaster.Web.Models\JGP.NoteMaster.Web.Models.csproj" />
+  </ItemGroup>
+
 </Project>

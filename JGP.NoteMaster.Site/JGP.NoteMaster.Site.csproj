@@ -5,17 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Configuration\" />
     <Folder Include="Application\Helpers\" />
     <Folder Include="Application\Middleware\" />
-    <Folder Include="Areas\Standard\Controllers\" />
     <Folder Include="Areas\Standard\Models\" />
-    <Folder Include="Areas\Standard\Views\Home\" />
-    <Folder Include="Areas\Standard\Views\Shared\" />
+    <Folder Include="Areas\Standard\Pages\Components\NoteList\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Home\" />
-    <Folder Include="Views\Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JGP.NoteMaster.Web.Proxy\JGP.NoteMaster.Web.Proxy.csproj" />
   </ItemGroup>
 
 </Project>
