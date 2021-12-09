@@ -57,8 +57,12 @@
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>A Task&lt;DataResult&gt; representing the asynchronous operation.</returns>
+        [HttpPost("categories")]
+        [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
         public async Task<DataResult> CreateCategoryAsync([Required] CategoryModel model)
         {
+            if (!ModelState.IsValid) return DataResult.GetErrorDataResult("ModelStateError");
+
             return await _noteService.CreateCategoryAsync(model.GetCreateCommand());
         }
 
@@ -74,6 +78,32 @@
             return categories.Select(x => new CategoryModel(x)).ToList();
         }
 
+        /// <summary>
+        ///     Update category as an asynchronous operation.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>A Task&lt;DataResult&gt; representing the asynchronous operation.</returns>
+        [HttpPut("categories")]
+        [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
+        public async Task<DataResult> UpdateCategoryAsync([Required] CategoryModel model)
+        {
+            if (!ModelState.IsValid) return DataResult.GetErrorDataResult("ModelStateError");
+
+            return await _noteService.UpdateCategoryAsync(model.GetUpdateCommand());
+        }
+
+        /// <summary>
+        ///     Delete category as an asynchronous operation.
+        /// </summary>
+        /// <param name="categoryId">The category identifier.</param>
+        /// <returns>A Task&lt;DataResult&gt; representing the asynchronous operation.</returns>
+        [HttpDelete("categories/{categoryId:guid}")]
+        [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
+        public async Task<DataResult> DeleteCategoryAsync([Required] Guid categoryId)
+        {
+            return await _noteService.DeleteCategoryAsync(categoryId);
+        }
+
         #endregion
 
         #region NOTES
@@ -87,6 +117,8 @@
         [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
         public async Task<DataResult> CreateNoteAsync([Required] NoteModel model)
         {
+            if (!ModelState.IsValid) return DataResult.GetErrorDataResult("ModelStateError");
+
             return await _noteService.CreateNoteAsync(model.GetCreateCommand());
         }
 
@@ -104,15 +136,15 @@
         }
 
         /// <summary>
-        ///     Get notes by tag as an asynchronous operation.
+        ///     Get notes by category as an asynchronous operation.
         /// </summary>
-        /// <param name="tagId">The tag identifier.</param>
+        /// <param name="categoryId">The category identifier.</param>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        [HttpGet("notes/{tagId:guid}")]
+        [HttpGet("notes/{categoryId:guid}")]
         [ProducesResponseType(typeof(List<NoteModel>), StatusCodes.Status200OK)]
-        public async Task<List<NoteModel>> GetNotesByTagAsync([Required] Guid tagId)
+        public async Task<List<NoteModel>> GetNotesByCategoryAsync([Required] Guid categoryId)
         {
-            var notes = await _noteService.GetNotesByCategoryAsync(tagId);
+            var notes = await _noteService.GetNotesByCategoryAsync(categoryId);
             return notes.Select(x => new NoteModel(x)).ToList();
         }
 
@@ -125,19 +157,23 @@
         [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
         public async Task<DataResult> UpdateNoteAsync([Required] NoteModel model)
         {
+            if (!ModelState.IsValid) return DataResult.GetErrorDataResult("ModelStateError");
+
             return await _noteService.UpdateNoteAsync(model.GetUpdateCommand());
         }
 
         /// <summary>
         ///     Delete note as an asynchronous operation.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="noteId">The note identifier.</param>
         /// <returns>A Task&lt;DataResult&gt; representing the asynchronous operation.</returns>
-        [HttpDelete("note")]
+        [HttpDelete("note/{noteId:guid}")]
         [ProducesResponseType(typeof(DataResult), StatusCodes.Status200OK)]
-        public async Task<DataResult> DeleteNoteAsync([Required] NoteModel model)
+        public async Task<DataResult> DeleteNoteAsync([Required] Guid noteId)
         {
-            return await _noteService.DeleteNoteAsync(model.Id);
+            if (!ModelState.IsValid) return DataResult.GetErrorDataResult("ModelStateError");
+
+            return await _noteService.DeleteNoteAsync(noteId);
         }
 
         #endregion

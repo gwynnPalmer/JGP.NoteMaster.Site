@@ -1,5 +1,6 @@
 namespace JGP.NoteMaster.Site
 {
+    using Application.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -19,6 +20,11 @@ namespace JGP.NoteMaster.Site
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            var appSettings = new AppSettings();
+            Configuration.GetSection(AppSettings.ConfigurationSectionName).Bind(appSettings);
+
+            IocConfiguration.Configure(services, Configuration, appSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
